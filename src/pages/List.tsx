@@ -15,6 +15,7 @@ export default function List({ ownersList }: listProps) {
           </Link>
         </div>
       ))}
+      <p><Link href="/">Back</Link></p>
     </div>
   );
 }

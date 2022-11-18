@@ -1,4 +1,5 @@
 import { NextPageContext } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { obj } from "../../../api/obj";
 
@@ -8,7 +9,12 @@ export interface personProps {
 
 export default function person({ ownersList }: personProps) {
   const router = useRouter();
-  return <pre>{ownersList?.[0].details}</pre>;
+  return (
+    <div>
+      <pre>{ownersList?.[0].details}</pre>
+      <p><Link href="/List">Back</Link></p>
+    </div>
+  );
 }
 
 export async function getServerSideProps({ query }: url) {

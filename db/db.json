@@ -24,6 +24,11 @@
       "vehicle": "SpaceX",
       "name": "Elon Musk",
       "details": "some detail Elon"
-    }      
+    },
+    {
+      "vehicle": "blato",
+      "name": "lustr",
+      "details": "some detail lustr"
+    }
   ]
 }
