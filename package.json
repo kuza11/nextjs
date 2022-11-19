@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "node ./database-setup && next start",
+    "build": "node ./database-setup && next build",
+    "start": "next start",
     "lint": "next lint",
     "mock-server": "json-server --watch ./db/db.json -p 4001"
   },

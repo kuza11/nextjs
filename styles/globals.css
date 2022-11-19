@@ -12,3 +12,8 @@ body {
 a {
   color: wheat;
 }
+
+pre{
+  font-size: 15px;
+  margin-left: 5px;
+}
