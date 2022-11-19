@@ -11,7 +11,7 @@ export default function person({ ownersList }: personProps) {
   const router = useRouter();
   return (
     <div>
-      <pre>{ownersList?.[0].details}</pre>
+      <pre>{ownersList?.[0]?.details}</pre>
       <p><Link href="/list">Back</Link></p>
     </div>
   );

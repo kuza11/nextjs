@@ -15,11 +15,12 @@ export default function List({ ownersList }: listProps) {
           </Link>
         </div>
       ))}
-      <p><Link href="/">Back</Link></p>
+      <p>
+        <Link href="/">Back</Link>
+      </p>
     </div>
   );
 }
-
 
 export async function getServerSideProps() {
   const response = await fetch("http://localhost:4001/vehicles");
