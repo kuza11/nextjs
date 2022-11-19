@@ -12,3 +12,13 @@ export function homepage() {
     </div>
   );
 }
+
+export async function writeData() { await fetch('http://localhost:3000/api/person/2', {
+    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: JSON.stringify({name:'new',email:'new@new.com'}) // body data type must match "Content-Type" header
+  });
+}
