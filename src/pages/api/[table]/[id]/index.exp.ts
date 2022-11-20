@@ -8,7 +8,8 @@ export default async function getPersonById(
 ) {
   if (req.method === "GET") {
     const data = await readDB({table: req.query.table, id: req.query.id});
-    res.status(200).json(data);
+    if(data) res.status(200).json(data);
+    else res.status(404).json({message: "data does not exist"});
   } else if (req.method === "PUT") {
     await writeDB({table: req.query.table, id: req.query.id}, {username: req.body.username, email: req.body.email, password: req.body.password});
     res.status(200).json({mesage: "success"});
