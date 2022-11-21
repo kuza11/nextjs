@@ -7,11 +7,8 @@ export async function writeDB(
   { username, email, password }: writeDBparams
 ) {
   const db = await openDB();
-  console.log(username, email, password, id);
-  await db.run(
-    `UPDATE ${table} SET username = ?, email = ?, password = ? where id = ?`,
-    [username, email, password, id]
-  );
+  const cmd = crtCmd({table, id}, {username, email, password});
+  await db.run(cmd);
 }
 
 export async function readDB({ table, id }: functionParams) {
@@ -24,6 +21,25 @@ async function openDB() {
     filename: "./" + defValues.databaseName,
     driver: sqlite3.Database,
   });
+}
+
+function crtCmd({table, id}: functionParams, {username, email, password}: writeDBparams){
+  let num = 0;
+  let command = `UPDATE ${table} SET`;
+  let paramsArr = Object.entries({username: username, email: email, password: password});
+  paramsArr.forEach((e) =>{
+    if(e[1]) num++;
+  });
+  paramsArr.forEach((e) => {
+    if(e[1] && num > 1){
+      command += ` ${e[0]} = "${e[1]}",`;
+      num--;
+    }else if(e[1] && num == 1){
+      command += ` ${e[0]} = "${e[1]}"`;
+    }
+  });
+  command += ` where id = ${id}`
+  return(command);
 }
 
 export interface functionParams {

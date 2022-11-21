@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export function homepage() {
-
+  writeData();
   return (
     <div>
       <h2>
@@ -23,6 +23,6 @@ export async function writeData() { await fetch(`http://localhost:3000/api/perso
       'Content-Type': 'application/json'
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify({username:'new', email:'new@new.com', password: '951', table: 'person'}) // body data type must match "Content-Type" header
+    body: JSON.stringify({username:'new3', email:'new3@new3.com'}) // body data type must match "Content-Type" header
   });
 }
