@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { readDB, writeDB } from "../../DBfunctions";
+import { deleteDB, insertDB, readDB, writeDB } from "../../DBfunctions";
 
 
 export default async function getPersonById(
@@ -12,6 +12,12 @@ export default async function getPersonById(
     else res.status(404).json({message: "data does not exist"});
   } else if (req.method === "PUT") {
     await writeDB({table: req.query.table, id: req.query.id}, {username: req.body.username, email: req.body.email, password: req.body.password});
+    res.status(200).json({mesage: "success"});
+  } else if(req.method === "POST"){
+    await insertDB({table: req.query.table, id: req.query.id}, {username: req.body.username, email: req.body.email, password: req.body.password});
+    res.status(200).json({mesage: "success"});
+  } else if(req.method === "DELETE"){
+    await deleteDB({table: req.query.table, id: req.query.id});
     res.status(200).json({mesage: "success"});
   } else {
     res.status(405).json({ message: "Method Not Allowed" });
