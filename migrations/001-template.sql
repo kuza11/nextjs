@@ -6,20 +6,41 @@ CREATE TABLE person (
   password TEXT
 );
 
-CREATE TABLE Vehicle (
+CREATE TABLE prog_lang (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  brand TEXT,
-  model TEXT,
-  ownerId INTEGER REFERENCES Person(id)
+  ownerId INTEGER REFERENCES Person(id),
+  _c NUMBER,
+  _cpp NUMBER,
+  _cs NUMBER,
+  _java NUMBER,
+  _javascript NUMBER,
+  _typescript NUMBER,
+  _python NUMBER,
+  _go NUMBER,
+  _kotlin NUMBER,
+  _php NUMBER,
+  _swift NUMBER,
+  _r NUMBER,
+  _ruby NUMBER,
+  _matlab NUMBER,
+  _scala NUMBER,
+  _html NUMBER,
+  _css NUMBER,
+  _assembly NUMBER,
+  _fs NUMBER,
+  _fortran NUMBER,
+  _sql NUMBER
+
+
+
+
+
 );
 
-INSERT INTO Person (username, email, password) values ('qwer', 'qwer@uiop.com', "123");
-INSERT INTO Person (username, email, password) values ('asdf', 'asdf@uiop.com', "123");
+INSERT INTO person (username, email, password) values ('qwer', 'qwer@uiop.com', "123");
+INSERT INTO person (username, email, password) values ('asdf', 'asdf@uiop.com', "123");
 
-INSERT INTO Vehicle (brand, model, ownerId) values('audi', 'r8', 1);
-INSERT INTO Vehicle (brand, model, ownerId) values('audi', 'tt', 1);
-INSERT INTO Vehicle (brand, model, ownerId) values('mercedes', 'benz', 2);
 
 -- Down
-DROP TABLE Person;
-DROP TABLE Vehicle;
+DROP TABLE person;
+DROP TABLE prog_lang;

@@ -1,6 +1,6 @@
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
-import defValues from "../../../config.json";
+import defValues from "./config.json";
 
 export async function insertDB(
   { table, id }: functionParams,
@@ -72,3 +72,4 @@ export interface writeDBparams {
   email: string;
   password: string;
 }
+

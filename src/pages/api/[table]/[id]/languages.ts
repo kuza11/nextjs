@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { deleteDB, insertDB, readDB, writeDB } from "../../../../../DB_person_funcs";
+import { deleteDB, insertDB, readDB, writeDB } from "../../../../../DB_lang_funcs";
 
 
 export default async function getPersonById(
