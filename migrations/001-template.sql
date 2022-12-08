@@ -71,6 +71,7 @@ INSERT INTO languages (name) values
   ("_assembly"),
   ("_fs"),
   ("_fortran"),
+  ("rust"),
   ("_sq");
 
 
