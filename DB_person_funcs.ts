@@ -3,19 +3,19 @@ import { open } from "sqlite";
 import defValues from "./config.json";
 
 export async function insertDB(
-  { table, id }: functionParams,
-  { username, email, password }: writeDBparams
+  { table }: functionInsParams,
+  { username, password }: writeDBparams
 ) {
   const db = await openDB();
-  await db.run(`INSERT INTO ${table} VALUES (?, ?, ?, ?)`, [id, username, email, password]);
+  await db.run(`INSERT INTO ${table} (username, password) VALUES (?, ?)`, [ username, password]);
 }
 
 export async function writeDB(
   { table, id }: functionParams,
-  { username, email, password }: writeDBparams
+  { username, password }: writeDBparams
 ) {
   const db = await openDB();
-  const cmd = crtCmd({ table, id }, { username, email, password });
+  const cmd = crtCmd({ table, id }, { username, password });
   await db.run(cmd);
 }
 
@@ -38,13 +38,12 @@ async function openDB() {
 
 function crtCmd(
   { table, id }: functionParams,
-  { username, email, password }: writeDBparams
+  { username, password }: writeDBparams
 ) {
   let num = 0;
   let command = `UPDATE ${table} SET`;
   let paramsArr = Object.entries({
     username: username,
-    email: email,
     password: password
   });
   paramsArr.forEach((e) => {
@@ -68,8 +67,10 @@ export interface functionParams {
 }
 
 export interface writeDBparams {
-  username: string;
-  email: string;
-  password: string;
+  username: string | string[] | undefined;
+  password: string | string[] | undefined;
 }
 
+export interface functionInsParams {
+  table: string | string[] | undefined;
+}
