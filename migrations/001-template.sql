@@ -1,4 +1,6 @@
 -- Up
+
+
 CREATE TABLE persons (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT,
@@ -21,31 +23,39 @@ CREATE TABLE tags (
 
 CREATE TABLE person_tags (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  persons_id INTEGER FOREIGN KEY REFERENCES persons(id),
-  tags_id INTEGER FOREIGN KEY REFERENCES tags(id)
+  persons_id INTEGER,
+  tags_id INTEGER,
+  FOREIGN KEY (tags_id) REFERENCES tags(id),
+  FOREIGN KEY (persons_id) REFERENCES persons(id)
 );
 
 CREATE TABLE logs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  persons_id INTEGER FOREIGN KEY REFERENCES persons(id),
+  persons_id INTEGER,
   name TEXT,
-  languages_id INTEGER FOREIGN KEY REFERENCES languages(id),
+  languages_id INTEGER,
   description TEXT,
   time NUMBER,
-  date TEXT
+  date TEXT,
+  FOREIGN KEY (persons_id) REFERENCES persons(id),
+  FOREIGN KEY (languages_id) REFERENCES languages(id)
 );
 
 CREATE TABLE tags_assignment (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  logs_id INTEGER FOREIGN KEY REFERENCES logs(id),
-  tags_id INTEGER FOREIGN KEY REFERENCES tags(id)
+  logs_id INTEGER,
+  tags_id INTEGER,
+  FOREIGN KEY (tags_id) REFERENCES tags(id),
+  FOREIGN KEY (logs_id) REFERENCES logs(id)
 );
 
 CREATE TABLE persons_languages (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  persons_id INTEGER FOREIGN KEY REFERENCES persons(id),
-  languages_id INTEGER FOREIGN KEY REFERENCES languages(id),
-  total_time NUMBER
+  persons_id INTEGER,
+  languages_id INTEGER,
+  total_time NUMBER,
+  FOREIGN KEY (languages_id) REFERENCES languages(id),
+  FOREIGN KEY (persons_id) REFERENCES persons(id)
 );
 
 INSERT INTO persons (username, password) values ('qwer', "123");
@@ -72,9 +82,14 @@ INSERT INTO languages (name) values
   ("_fs"),
   ("_fortran"),
   ("_rust"),
-  ("_sq");
+  ("_sql");
 
 
 -- Down
 DROP TABLE person;
-DROP TABLE prog_lang;
+DROP TABLE languages;
+DROP TABLE tags;
+DROP TABLE tags_assignment;
+DROP TABLE logs;
+DROP TABLE person_tags;
+DROP TABLE persons_languages;

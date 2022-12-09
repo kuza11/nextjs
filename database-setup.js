@@ -11,7 +11,9 @@ async function openDB() {
 
 async function setup() {
   const db = await openDB();
+  //await db.run("PRAGMA foreign_keys = ON;");
   await db.migrate({ force: "last" });
+
 
   const people = await db.all("SELECT * from persons");
   console.log("ALL PEOPLE", JSON.stringify(people, null, 2));
