@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { insertDB } from "../../../../DB_person_funcs";
 
 
-export default async function RWPersonById(
+export default async function WPersons(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
