@@ -61,32 +61,31 @@ CREATE TABLE persons_languages (
 INSERT INTO persons (username, password) values ('qwer', "123");
 INSERT INTO persons (username, password) values ('asdf', "123");
 INSERT INTO languages (name) values
-  ("_c"),
-  ("_cpp"),
-  ("_cs"),
-  ("_java"),
-  ("_javascript"),
-  ("_typescript"),
-  ("_python"),
-  ("_go"),
-  ("_kotlin"),
-  ("_php"),
-  ("_swift"),
-  ("_r"),
-  ("_ruby"),
-  ("_matlab"),
-  ("_scala"),
-  ("_html"),
-  ("_css"),
-  ("_assembly"),
-  ("_fs"),
-  ("_fortran"),
-  ("_rust"),
-  ("_sql");
+  ("c"),
+  ("cpp"),
+  ("cs"),
+  ("java"),
+  ("javascript"),
+  ("typescript"),
+  ("python"),
+  ("go"),
+  ("kotlin"),
+  ("php"),
+  ("swift"),
+  ("ruby"),
+  ("matlab"),
+  ("scala"),
+  ("html"),
+  ("css"),
+  ("assembly"),
+  ("fs"),
+  ("fortran"),
+  ("rust"),
+  ("sql");
 
 
 -- Down
-DROP TABLE person;
+DROP TABLE persons;
 DROP TABLE languages;
 DROP TABLE tags;
 DROP TABLE tags_assignment;

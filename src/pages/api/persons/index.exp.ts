@@ -8,8 +8,10 @@ export default async function RWPersonById(
 ) {
 
   if(req.method === "POST"){
-    const data = await insertDB({table: req.query.table}, {username: req.body.username, password: req.body.password, title: req.body.title, description: req.body.description});
+    const data = await insertDB({table: "persons"}, {username: req.body.username, password: req.body.password, title: req.body.title, description: req.body.description});
     if(data) res.status(201).json(data);
     else res.status(400).json({message: "error"});
+  } else{
+    res.status(405).json({ message: "Method Not Allowed" });
   }
 }
