@@ -17,12 +17,14 @@ export function homepage() {
   );
 }
 
-export async function writeData() { await fetch(`http://localhost:3000/api/person/4`, {
-    method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-    /*headers: {
+export async function writeData() { const data = await fetch(`http://localhost:3000/api/persons/10`, {
+    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+    headers: {
       'Content-Type': 'application/json'
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify({username:'new', email:'new3@new3.com', password:'984'}) // body data type must match "Content-Type" header*/
+    body: JSON.stringify({username:'new', password:'984', title: "sdf5", description: "fdsg"}) // body data type must match "Content-Type" header
   });
+  const message = await data.json();
+  console.log(message);
 }

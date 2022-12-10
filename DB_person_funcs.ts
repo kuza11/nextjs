@@ -4,24 +4,24 @@ import defValues from "./config.json";
 
 export async function insertDB(
   { table }: functionInsParams,
-  { username, password }: writeDBparams
+  { username, password, title, description }: writeDBparams
 ) {
   const db = await openDB();
-  await db.run(`INSERT INTO ${table} (username, password) VALUES (?, ?)`, [ username, password]);
+  return await db.run(`INSERT INTO ${table} (username, password, title, description) VALUES (?, ?, ?, ?)`, [ username, password, title, description ]);
 }
 
 export async function writeDB(
   { table, id }: functionParams,
-  { username, password }: writeDBparams
+  { username, password, title, description }: writeDBparams
 ) {
   const db = await openDB();
-  const cmd = crtCmd({ table, id }, { username, password });
-  await db.run(cmd);
+  const cmd = crtCmd({ table, id }, { username, password, title, description});
+  return await db.run(cmd);
 }
 
 export async function deleteDB({table, id}: functionParams) {
   const db = await openDB();
-  await db.run(`DELETE FROM ${table} WHERE id = ?`, [id]);
+  return await db.run(`DELETE FROM ${table} WHERE id = ?`, [id]);
 }
 
 export async function readDB({ table, id }: functionParams) {
@@ -38,13 +38,15 @@ async function openDB() {
 
 function crtCmd(
   { table, id }: functionParams,
-  { username, password }: writeDBparams
+  { username, password, title, description }: writeDBparams
 ) {
   let num = 0;
   let command = `UPDATE ${table} SET`;
   let paramsArr = Object.entries({
     username: username,
-    password: password
+    password: password,
+    title: title,
+    description: description
   });
   paramsArr.forEach((e) => {
     if (e[1]) num++;
@@ -69,6 +71,9 @@ export interface functionParams {
 export interface writeDBparams {
   username: string | string[] | undefined;
   password: string | string[] | undefined;
+  title: string | string[] | undefined;
+  description: string | string[] | undefined;
+  
 }
 
 export interface functionInsParams {
