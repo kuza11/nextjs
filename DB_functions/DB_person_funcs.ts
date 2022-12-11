@@ -1,6 +1,6 @@
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
-import defValues from "./config.json";
+import defValues from "../config.json";
 
 export async function insertDB(
   { table }: functionInsParams,
@@ -15,8 +15,9 @@ export async function writeDB(
   { username, password, title, description }: writeDBparams
 ) {
   const db = await openDB();
-  const cmd = crtCmd({ table, id }, { username, password, title, description});
-  return await db.run(cmd);
+  //const cmd = crtCmd({ table, id }, { username, password, title, description});
+  //return await db.run(cmd, [id]);
+  return await db.run(`UPDATE persons SET username = ?, password = ? WHERE id = ?`, ["poi", "poi", 1]);
 }
 
 export async function deleteDB({table, id}: functionParams) {
@@ -36,7 +37,28 @@ async function openDB() {
   });
 }
 
-function crtCmd(
+function crtCmd({ table, id }: functionParams, { username, password, title, description}: writeDBparams){
+  
+}
+
+export interface functionParams {
+  table: string | string[] | undefined;
+  id: string | string[] | undefined;
+}
+
+export interface writeDBparams {
+  username: string | string[] | undefined;
+  password: string | string[] | undefined;
+  title: string | string[] | undefined;
+  description: string | string[] | undefined;
+  
+}
+
+export interface functionInsParams {
+  table: string | string[] | undefined;
+}
+
+/*function crtCmd(
   { table, id }: functionParams,
   { username, password, title, description }: writeDBparams
 ) {
@@ -59,23 +81,6 @@ function crtCmd(
       command += ` ${e[0]} = "${e[1]}"`;
     }
   });
-  command += ` where id = ${id}`;
+  command += ` where id = ?`;
   return command;
-}
-
-export interface functionParams {
-  table: string | string[] | undefined;
-  id: string | string[] | undefined;
-}
-
-export interface writeDBparams {
-  username: string | string[] | undefined;
-  password: string | string[] | undefined;
-  title: string | string[] | undefined;
-  description: string | string[] | undefined;
-  
-}
-
-export interface functionInsParams {
-  table: string | string[] | undefined;
-}
+}*/

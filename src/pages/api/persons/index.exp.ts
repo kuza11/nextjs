@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { insertDB } from "../../../../DB_person_funcs";
+import { insertDB } from "../../../../DB_functions/DB_person_funcs";
 
 
 export default async function WPersons(

@@ -7,7 +7,7 @@ export default function http_req(){
         1. .../api/persons/[id]
         <br />  [id] - element id
         <br />  GET - returns all data abut the element {'{[prop]: [data], ...} || {message: "element does not exist"}'}
-        <br />  PUT - rewrites element based on JSON body {'{username?: string, password?: string, title?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"}'}
+        <br />  PUT - rewrites element based on JSON body {'{username?: string, password?: string, title?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"} || {message: "error}'}
         <br />  DELETE - deletes element, returns status {'{message: "success"} - even if it doesn\'t exist || {message: "error"}'}
       </pre>
       <br />

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { insertDB, readDB } from "../../../../DB_lang_funcs";
+import { insertDB, readDB } from "../../../../DB_functions/DB_lang_funcs";
 
 export default async function RWlanguages(
   req: NextApiRequest,

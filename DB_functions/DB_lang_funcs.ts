@@ -1,6 +1,6 @@
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
-import defValues from "./config.json";
+import defValues from "../config.json";
 
 export async function readDB({ table }: functionParams) {
   const db = await openDB();
