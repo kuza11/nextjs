@@ -14,6 +14,8 @@ export async function readDBall({ table }: functionParamsAll) {
 
 export async function writeDB({ table, id }: functionParams, { name, color, description }: writeDBparams) {
   const db = await openDB();
+  const cmd = crtCmd(table, { name, color, description });
+  return await db.run(cmd.command, cmd.arr.concat(id ? id : ""))
 }
 
 export async function insertDB({ table }: functionParamsAll, { name, color, description }: writeDBparams) {
@@ -29,30 +31,37 @@ async function openDB() {
 }
 
 function crtCmd(
-  { table, id }: functionParams,
+  table: string | string[] | undefined, 
   { name, color, description }: writeDBparams
 ) {
   let num = 0;
   let command = `UPDATE ${table} SET`;
+  let arr: string[];
+  arr = [];
   let paramsArr = Object.entries({
     name: name,
     color: color,
     description: description
   });
   paramsArr.forEach((e) => {
-    if (e[1]) num++;
+    if (e[1]){ 
+      num++;
+      let arg = e[1].toString();
+      arr.push(arg);
+    }
   });
   paramsArr.forEach((e) => {
     if (e[1] && num > 1) {
-      command += ` ${e[0]} = "${e[1]}",`;
+      command += ` ${e[0]} = ?,`;
       num--;
     } else if (e[1] && num == 1) {
-      command += ` ${e[0]} = "${e[1]}"`;
+      command += ` ${e[0]} = ?`;
     }
   });
-  command += ` where id = ${id}`;
-  return command;
+  command += ` where id = ?`;
+  return {command, arr};
 }
+
 
 export interface functionParamsAll{
   table: string | string[] | undefined;

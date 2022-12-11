@@ -14,7 +14,7 @@ export default async function RWPersonById(
     const data = await writeDB({table: "persons", id: req.query.id}, {username: req.body.username, password: req.body.password, title: req.body.title, description: req.body.description});
     if(data.changes == 0) res.status(404).json({message: "element does not exist"});
     else if(data) res.status(200).json({message: "success"});
-    else res.status(400).json({message: "error"})
+    else res.status(400).json({message: "error"});
   } else if (req.method == "DELETE"){
     const data = await deleteDB({table: "persons", id: req.query.id});
     if(data) res.status(200).json({message: "success"});

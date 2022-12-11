@@ -10,8 +10,10 @@ export default async function RWtags(
       if(data)res.status(200).json(data);
       else res.status(400).json({message: "error"})
     }else if(req.method === "POST"){
-      const data = await insertDB({table: "tags"}, {name: req.body.name, color: req.body.name, description: req.body.description});
+      const data = await insertDB({table: "tags"}, {name: req.body.name, color: req.body.color, description: req.body.description});
       if(data)res.status(201).json(data);
       else res.status(400).json({message: "error"})
+    }else {
+      res.status(405).json({ message: "Method Not Allowed" });
     }
 }

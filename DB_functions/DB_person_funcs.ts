@@ -1,6 +1,7 @@
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import defValues from "../config.json";
+import exp from "constants";
 
 export async function insertDB(
   { table }: functionInsParams,
@@ -15,9 +16,8 @@ export async function writeDB(
   { username, password, title, description }: writeDBparams
 ) {
   const db = await openDB();
-  //const cmd = crtCmd({ table, id }, { username, password, title, description});
-  //return await db.run(cmd, [id]);
-  return await db.run(`UPDATE persons SET username = ?, password = ? WHERE id = ?`, ["poi", "poi", 1]);
+  const cmd = crtCmd(table , { username, password, title, description});
+  return await db.run(cmd.command, cmd.arr.concat(id ? id : ""));
 }
 
 export async function deleteDB({table, id}: functionParams) {
@@ -37,9 +37,6 @@ async function openDB() {
   });
 }
 
-function crtCmd({ table, id }: functionParams, { username, password, title, description}: writeDBparams){
-  
-}
 
 export interface functionParams {
   table: string | string[] | undefined;
@@ -58,12 +55,14 @@ export interface functionInsParams {
   table: string | string[] | undefined;
 }
 
-/*function crtCmd(
-  { table, id }: functionParams,
+function crtCmd(
+  table: string | string[] | undefined,
   { username, password, title, description }: writeDBparams
 ) {
   let num = 0;
   let command = `UPDATE ${table} SET`;
+  let arr: string[];
+  arr = [];
   let paramsArr = Object.entries({
     username: username,
     password: password,
@@ -71,16 +70,20 @@ export interface functionInsParams {
     description: description
   });
   paramsArr.forEach((e) => {
-    if (e[1]) num++;
+    if (e[1]){ 
+      num++;
+      let arg = e[1].toString();
+      arr.push(arg);
+    }
   });
   paramsArr.forEach((e) => {
     if (e[1] && num > 1) {
-      command += ` ${e[0]} = "${e[1]}",`;
+      command += ` ${e[0]} = ?,`;
       num--;
     } else if (e[1] && num == 1) {
-      command += ` ${e[0]} = "${e[1]}"`;
+      command += ` ${e[0]} = ?`;
     }
   });
   command += ` where id = ?`;
-  return command;
-}*/
+  return {command, arr};
+}

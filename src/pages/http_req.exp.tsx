@@ -6,7 +6,7 @@ export default function http_req(){
       <pre>
         1. .../api/persons/[id]
         <br />  [id] - element id
-        <br />  GET - returns all data abut the element {'{[prop]: [data], ...} || {message: "element does not exist"}'}
+        <br />  GET - returns all data abut the element {'{[prop]: [data] | null, ...} || {message: "element does not exist"}'}
         <br />  PUT - rewrites element based on JSON body {'{username?: string, password?: string, title?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"} || {message: "error}'}
         <br />  DELETE - deletes element, returns status {'{message: "success"} - even if it doesn\'t exist || {message: "error"}'}
       </pre>
@@ -19,7 +19,19 @@ export default function http_req(){
       <pre>
         3. .../api/languages
         <br />  POST - adds new element based on JSON body {"{name: string}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {message: "error"}'}
-        <br />  GET - returns all data abut all elements {"[{id: int, name: string}, {...}, ...] - array of objects"}
+        <br />  GET - returns all data abut all elements {'[{id: int, name: string}, {...}, ...] - array of objects || {message: "element does not exist"}'}
+      </pre>
+      <br />
+      <pre>
+        4. .../api/tags/[id]
+        <br />  GET - returns all data abut the element {'{[prop]: [data] | null, ...} || {message: "element does not exist"}'}
+        <br />  PUT - rewrites element based on JSON body {'{name?: string, color?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"} || {message: "error}'}
+      </pre>
+      <br />
+      <pre>
+        5. .../api/tags
+        <br />  GET - returns all data abut all elements {'[{id: int, name: string | null , color: string}, {...}, ...] - array of objects || {message: "element does not exist"}'}
+        <br />  POST - adds new element based on JSON body {"{name: string}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {message: "error"}'}
       </pre>
       <br />
       <br />
