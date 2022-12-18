@@ -1,7 +1,6 @@
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import defValues from "../config.json";
-import exp from "constants";
 
 export async function insertDB(
   { table }: functionInsParams,

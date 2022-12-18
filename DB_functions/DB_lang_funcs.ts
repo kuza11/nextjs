@@ -9,7 +9,7 @@ export async function readDB({ table }: functionParams) {
 
 export async function insertDB({ table }: functionParams, { name } : writeDBparams) {
   const db = await openDB();
-  return await db.run(`INSERT INTO ${table} (name) VALUES (?)`, [name])
+  return await db.run(`INSERT INTO ${table} (name) VALUES (?)`, [name]);
 }
 
 async function openDB() {
