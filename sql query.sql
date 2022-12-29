@@ -5,4 +5,5 @@ DROP VIEW vw;
 
 --SELECT * FROM logs;
 SELECT * FROM tags_assignment INNER JOIN tags on	tags_assignment.tags_id = tags.id WHERE tags_assignment.logs_id = 1;
+SELECT tags.id, tags.name, tags.color, tags.description FROM tags_assignment INNER JOIN tags on	tags_assignment.tags_id = tags.id WHERE tags_assignment.logs_id = 1;
 --SELECT * FROM languages WHERE id = 2;
