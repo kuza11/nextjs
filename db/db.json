@@ -1,0 +1,34 @@
+{
+  "vehicles": [
+    {
+      "vehicle": "Car",
+      "name": "Bruno Antunes",
+      "details": "some detail about Bruno's Car"
+    },
+    {
+      "vehicle": "Bike",
+      "name": "Bruno Antunes",
+      "details": "some detail about Bruno's Bike"
+    },
+    {
+      "vehicle": "Bike",
+      "name": "John Doe",
+      "details": "some detail bile"
+    },
+    {
+      "vehicle": "Airplane",
+      "name": "Bill Gates",
+      "details": "some detail Bill Gates"
+    } ,
+    {
+      "vehicle": "SpaceX",
+      "name": "Elon Musk",
+      "details": "some detail Elon"
+    },
+    {
+      "vehicle": "blato",
+      "name": "lustr",
+      "details": "some detail lustr"
+    }
+  ]
+}
