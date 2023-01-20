@@ -24,7 +24,7 @@ function test3(){
   return{a,b};
 }
 
-a = test3();
+a = test1();
 console.log(a);
 
 //test1();

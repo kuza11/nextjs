@@ -2,7 +2,7 @@ import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import defValues from "../config.json";
 
-export async function readDB({ table }: functionParams, { persons_id }: writeDBparams) {
+export async function readDB({ table }: functionParams, { persons_id }: {persons_id : string | string[] | undefined}) {
   const db = await openDB();
   let cmplt = [];
   let logsArr = await db.all(`SELECT logs.id, logs.name, logs.description, logs.time, logs.date, logs.persons_id, persons.username, languages.name as lang_name from ${table} INNER JOIN languages on logs.languages_id=languages.id INNER JOIN persons on logs.persons_id=persons.id WHERE persons.id = ?;`, [persons_id]);
@@ -10,6 +10,7 @@ export async function readDB({ table }: functionParams, { persons_id }: writeDBp
     cmplt.push({log: logsArr[i], tags: await db.all(`SELECT tags.id, tags.name, tags.description, tags.color FROM tags_assignment INNER JOIN tags on tags.id=tags_assignment.tags_id WHERE tags_assignment.logs_id = ?;`, [logsArr[i].id])});
     
   }
+  return cmplt;
 }
 
 export async function insertDB({ table }: functionParams, { name, description, time, date, persons_id, language, tags } : writeDBparams) {

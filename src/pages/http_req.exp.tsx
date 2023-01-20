@@ -34,6 +34,11 @@ export default function http_req(){
         <br />  POST - adds new element based on JSON body {"{name: string}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {message: "error"}'}
       </pre>
       <br />
+      <pre>
+        6. .../api/logs/[id]
+        <br/> 
+      </pre>
+      <br />
       <br />
       <pre>
         example:
