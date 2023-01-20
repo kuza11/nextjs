@@ -36,7 +36,7 @@ export default function http_req(){
       <br />
       <pre>
         6. .../api/logs/[id]
-        <br/> 
+        <br/>  GET - returns all logs based on persons id and all their tags {'[{log: {id: int, name: string, description: string, time: int, date: string, persons_id: int, username: string, lang_name: string}, tags: [{id: int, name: string, description: string, color: string}]}] || {message: "element does not exist"} || {message: "error"}}'}
       </pre>
       <br />
       <br />
