@@ -31,12 +31,14 @@ export default function http_req(){
       <pre>
         5. .../api/tags
         <br />  GET - returns all data abut all elements {'[{id: int, name: string | null , color: string}, {...}, ...] - array of objects || {message: "element does not exist"}'}
-        <br />  POST - adds new element based on JSON body {"{name: string}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {message: "error"}'}
+        <br />  POST - adds new element based on JSON body {"{name?: string, description?: string, color?: string}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {message: "error"}'}
       </pre>
       <br />
       <pre>
-        6. .../api/logs/[id]
-        <br/>  GET - returns all logs based on persons id and all their tags {'[{log: {id: int, name: string, description: string, time: int, date: string, persons_id: int, username: string, lang_name: string}, tags: [{id: int, name: string, description: string, color: string}]}] || {message: "element does not exist"} || {message: "error"}}'}
+        6. .../api/logs/[id] ||
+        <br/>   .../api/logs/[id]?sort=[time || rating || date] ||
+        <br/>   .../api/logs/[id]?sort=[time || rating || date]&order=[asc || desc]
+        <br/>  GET - returns all logs based on persons id and all their tags {'[{log: {id: int, name: string, description: string, time: real, date: int, rating: int, persons_id: int, username: string, lang_name: string}, tags: [{id: int, name: string, description: string, color: string}]}] || {message: "element does not exist"} || {message: "error"}}'}
       </pre>
       <br />
       <br />

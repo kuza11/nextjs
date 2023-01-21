@@ -35,8 +35,9 @@ CREATE TABLE logs (
   name TEXT,
   languages_id INTEGER,
   description TEXT,
+  rating INTEGER,
   time NUMBER,
-  date TEXT,
+  date INTEGER,
   FOREIGN KEY (persons_id) REFERENCES persons(id),
   FOREIGN KEY (languages_id) REFERENCES languages(id)
 );
