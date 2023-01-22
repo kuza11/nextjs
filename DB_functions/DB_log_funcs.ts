@@ -2,7 +2,7 @@ import sqlite3 from "sqlite3";
 import { ISqlite, open } from "sqlite";
 import defValues from "../config.json";
 
-export async function readDB({ table }: functionParams, { persons_id, sort}: {persons_id : string | string[] | undefined, sort: {by?: "time" | "rating" | "date", order?: "asc" | "desc"}}) {
+export async function readDB({ table }: functionParams, { persons_id, sort }: {persons_id : string | string[] | undefined, sort: {by?: "time" | "rating" | "date", order?: "asc" | "desc" }}) {
   const db = await openDB();
   let cmplt = [];
   let logsArr = await db.all(`SELECT logs.id, logs.name, logs.description, logs.time, logs.date, logs.rating, logs.persons_id, persons.username, languages.name as lang_name from ${table} INNER JOIN languages on logs.languages_id=languages.id INNER JOIN persons on logs.persons_id=persons.id WHERE persons.id = ? ${sort.by ? `ORDER BY ${sort.by} ${sort.order ? sort.order : ''}` : ''};`, [persons_id]);
@@ -13,7 +13,7 @@ export async function readDB({ table }: functionParams, { persons_id, sort}: {pe
   return cmplt;
 }
 
-export async function insertDB({ table }: functionParams, { name, description, time, date, persons_id, language, tags, tags_id} : writeDBparams) {
+export async function insertDB({ table }: functionParams, { name, description, time, date, persons_id, language, tags, tags_id } : writeDBparams) {
   let resultTag: ISqlite.RunResult;
   const db = await openDB();
   const resultLog = await db.run(`INSERT INTO ${table} (languages_id) SELECT languages.id FROM languages WHERE languages.name = ?;`, [language]);
@@ -23,7 +23,7 @@ export async function insertDB({ table }: functionParams, { name, description, t
     let Aarr: number[] = [];
     let cmdC = crtCmd(tags);
     resultTag = await db.run(cmdC.Tcmd, cmdC.Tarr);
-    if(!resultTag.lastID || !resultLog.lastID) return "e";
+    if(!resultTag.lastID || !resultLog.lastID) return 1;
     for (let i = 0; i < tags.length; i++) {
       Aarr.push(resultLog.lastID, resultTag.lastID - i);
     }
@@ -32,12 +32,13 @@ export async function insertDB({ table }: functionParams, { name, description, t
   if(tags_id){
     let Aarr: number[] = [];
     let cmd = crtTAcmd(tags_id);
-    if(!resultLog.lastID) return "e";
+    if(!resultLog.lastID) return 1;
     for (let i = 0; i < tags_id.length; i++) {
       Aarr.push(resultLog.lastID, tags_id[i]);
     }
     await db.run(cmd, Aarr);
   }
+  return resultLog;
 }
 
 async function openDB() {
