@@ -19,27 +19,30 @@ export default function http_req(){
       <pre>
         3. .../api/languages
         <br />  POST - adds new element based on JSON body {"{name: string}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {error: error, message: "Probably wrong data in body} || {message: "error"}'}
-        <br />  GET - returns all data about all elements {'[{id: int, name: string}, {...}, ...] - array of objects || {error: error, message: "Probably wrong data in body"} || {message: "element does not exist"}'}
+        <br />  GET - returns all data about all elements {'[{id: int, name: string}] - array of objects || {error: error, message: "Probably wrong data in body"} || {message: "element does not exist"}'}
       </pre>
       <br />
       <pre>
         4. .../api/tags/[id]
-        <br />  GET - returns all data about the element {'{[prop]: [data] | null, ...} || {error: error, message: "Probably wrong data in body"} || {message: "element does not exist"}'}
-        <br />  PUT - rewrites element based on JSON body {'{name?: string, color?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"} || {error: error, message: "Probably wrong data in body"} || {message: "error}'}
+        <br />  GET - returns all data about the element {'{name: string, color: string, description: string} || {error: error, message: "Probably wrong data in body"} || {message: "element does not exist"}'}
+        <br />  PUT - rewrites element based on JSON body {'{name?: string, color?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"} || {error: error, message: "Probably wrong data in body"} || {message: "error"}'}
       </pre>
       <br />
       <pre>
         5. .../api/tags
-        <br />  GET - returns all data about all elements {'[{id: int, name: string | null , color: string}, {...}, ...] - array of objects || {error: error, message: "Probably wrong data in body"} || {message: "element does not exist"}'}
+        <br />  GET - returns all data about all elements {'[{id: int, name: string, color: string, description: string}] - array of objects || {error: error, message: "Probably wrong data in body"} || {message: "element does not exist"}'}
         <br />  POST - adds new element based on JSON body {"{name?: string, description?: string, color?: string}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {error: error, message: "Probably wrong data in body"} || {message: "error"}'}
       </pre>
       <br />
       <pre>
         6. .../api/persons/logs/[id] ||
-        <br/>   .../api/persons/logs/[id]?sort=[time || rating || date] ||
-        <br/>   .../api/persons/logs/[id]?sort=[time || rating || date]&order=[asc || desc]
+        <br/>   .../api/persons/logs/[id]?sort=[time || rating || date || language] ||
+        <br/>   .../api/persons/logs/[id]?sort=[time || rating || date || language]&order=[asc || desc]
+        <br/>   .../api/persons/logs/[id]?sort=[time || rating || date || language]&order=[asc || desc]&filter=[id[]]
         <br/>  GET - returns all logs based on persons id and all their tags {'[{log: {id: int, name: string, description: string, time: real, date: int, rating: int, persons_id: int, username: string, lang_name: string}, tags: [{id: int, name: string, description: string, color: string}]}] || {message: "element does not exist"} || {error: error, message: "Probably wrong data in body"} || {message: "error"}'}
-        <br/>  POST - adds new element based on persons id and JSON body {"{name?: string, description?: string, time?: real, date?: int, language?: string, rating?: int, tags?: [{name: string, description: string, color: string,}], tags_id?: [int]}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {error: error, message: "Probably wrong data in body"} || {message: "error"}'}
+        <br/>  POST - adds new element based on persons id and JSON body {"{name?: string, description?: string, time?: real, date?: int, language?: string, rating?: int, tags?: [{name: string, description: string, color: string}], tags_id?: [int]}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {error: error, message: "Probably wrong data in body"} || {message: "error"}'}
+        <br/>  PUT - rewrites element based on JSON body {"name: string, description: string, time: real, date: int, language: name, rating: int, tags_id: [int]"} return status {'{message: "element does not exist"} || error: error, message: "Probably wrong data in body"} || {message: "error"}'}
+        <br/>  DELETE - deletes element, returns status {'{message: "success"} - even if it doesn\'t exist || {message: "error"}'}
       </pre>
       <br />
       <br />
@@ -60,3 +63,8 @@ export default function http_req(){
     </div>
   );
 }
+
+/*
+6. put, delete, sort, filter
+4. delete
+*/

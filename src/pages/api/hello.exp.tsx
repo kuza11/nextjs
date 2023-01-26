@@ -1,4 +1,3 @@
-// pages/api/hello.js
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createRouter, expressWrapper } from "next-connect";
 import cors from "cors";
