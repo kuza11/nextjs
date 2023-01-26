@@ -13,17 +13,18 @@ export async function readDB({ table }: functionParams, { persons_id, sort }: {p
   return cmplt;
 }
 
-export async function insertDB({ table }: functionParams, { name, description, time, date, persons_id, language, tags, tags_id } : writeDBparams) {
-  let resultTag: ISqlite.RunResult;
+export async function insertDB({ table }: functionParams, { name, description, time, date, rating, persons_id, language, tags, tags_id } : writeDBparams) {
   const db = await openDB();
+  console.log(language);
   const resultLog = await db.run(`INSERT INTO ${table} (languages_id) SELECT languages.id FROM languages WHERE languages.name = ?;`, [language]);
-  await db.run(`UPDATE ${table} set name = ?, description = ?, time = ?, date = ?, persons_id = ? WHERE id = ?;`, [name, description, time, date, persons_id, resultLog.lastID]);
+  const result = await db.run(`UPDATE ${table} set name = ?, description = ?, time = ?, date = ?, rating = ?, persons_id = ? WHERE id = ?;`, [name, description, time, date, rating, persons_id, resultLog.lastID]);
   await db.run(`INSERT INTO tags_assignment (logs_id, tags_id)`);
+  if(!result.lastID || !resultLog.lastID) return 1;
   if(tags){
     let Aarr: number[] = [];
     let cmdC = crtCmd(tags);
-    resultTag = await db.run(cmdC.Tcmd, cmdC.Tarr);
-    if(!resultTag.lastID || !resultLog.lastID) return 1;
+    const resultTag = await db.run(cmdC.Tcmd, cmdC.Tarr);
+    if(!resultTag.lastID) return 1;
     for (let i = 0; i < tags.length; i++) {
       Aarr.push(resultLog.lastID, resultTag.lastID - i);
     }
@@ -32,7 +33,6 @@ export async function insertDB({ table }: functionParams, { name, description, t
   if(tags_id){
     let Aarr: number[] = [];
     let cmd = crtTAcmd(tags_id);
-    if(!resultLog.lastID) return 1;
     for (let i = 0; i < tags_id.length; i++) {
       Aarr.push(resultLog.lastID, tags_id[i]);
     }
@@ -78,6 +78,7 @@ export interface writeDBparams{
   description: string | string[] | undefined;
   time: string | string[] | undefined;
   date: string | string[] | undefined;
+  rating: string | string[] | undefined;
   persons_id: string | string[] | undefined;
   language: string | string[] | undefined;
   tags?: [{name: string, description: string, color: string}];

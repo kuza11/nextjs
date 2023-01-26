@@ -15,7 +15,7 @@ export default async function RWllogs(
       if(data) res.status(200).json(data);
       else res.status(500).json({message: "error"});
       }else if(req.method === "POST"){
-        const result = await insertDB({table: "logs"}, {name: req.body.name, description: req.body.description, time: req.body.time, date: req.body.date, persons_id: req.query.id, language: req.body.language, tags: req.body.tags, tags_id: req.body.tags_id});
+        const result = await insertDB({table: "logs"}, {name: req.body.name, description: req.body.description, time: req.body.time, date: req.body.date, rating: req.query.rating, persons_id: req.query.id, language: req.body.language, tags: req.body.tags, tags_id: req.body.tags_id});
         if(result == 1) res.status(500).json({message: "error"});
         else if(result) res.status(201).json(result);
         else res.status(500).json({message: "error"});
