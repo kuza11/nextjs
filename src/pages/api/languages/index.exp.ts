@@ -14,24 +14,15 @@ router
     console.log(`Request took ${end - start}ms`);
   })
   .get(async (req, res) => {
-    try{
-      const data = await readDB({table: "languages"});
-      if(data) res.status(200).json(data);
-      else res.status(500).json({message: "error"});
-    }
-    catch (error){
-      res.status(400).json({error: error, message: "Probably wrong data in body"});
-    }
+    const data = await readDB({table: "languages"});
+    if(data) res.status(200).json(data);
+    else res.status(500).json({message: "error"});
+    
   })
   .post(async (req, res) => {
-    try{
-      const data = await insertDB({table: "languages"}, {name: req.body.name});
-      if(data) res.status(201).json(data);
-      else res.status(500).json({message: "error"});
-    }
-    catch (error){
-      res.status(400).json({error: error, message: "Probably wrong data in body"});
-    }
+    const data = await insertDB({table: "languages"}, {name: req.body.name});
+    if(data) res.status(201).json(data);
+    else res.status(500).json({message: "error"});
   })/*
   .put(
     async (req, res, next) => {
@@ -51,8 +42,7 @@ router
 // onError and onNoMatch
 export default router.handler({
   onError: (err, req, res) => {
-    console.error(err);
-    res.status(500).end("Something broke!");
+    res.status(400).json({error: err, message: "Probably wrong data in body"});
   },
   onNoMatch: (req, res) => {
     res.status(405).json({ message: "Method Not Allowed" });
