@@ -17,14 +17,18 @@ export function homepage() {
   );
 }
 
-export async function writeData() { const data = await fetch(`http://localhost:3000/api/persons/10`, {
-    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+/*export async function writeData() { const data = await fetch(`http://localhost:3000/api/persons/logs/1`, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
     headers: {
       'Content-Type': 'application/json'
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify({username:'new', password:'984', title: "sdf5", description: "fdsg"}) // body data type must match "Content-Type" header
+    body: JSON.stringify({name : "ui", description : "yui", time : 40, date : 1514774740, language : "ruby", rating: 120, tags_id: [1,2]}) // body data type must match "Content-Type" header
   });
+  const message = await data.json();
+  console.log(message);
+}*/
+export async function writeData() { const data = await fetch(`http://localhost:3000/api/persons/1`, {mode: "no-cors"});
   const message = await data.json();
   console.log(message);
 }

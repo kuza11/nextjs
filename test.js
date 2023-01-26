@@ -1,4 +1,5 @@
-const sqlite3 = require("sqlite3");
+const fetch = require("node-fetch");
+/*const sqlite3 = require("sqlite3");
 const {open} = require("sqlite");
 const defValues = require("./config.json");
 
@@ -36,7 +37,7 @@ async function openDB() {
     driver: sqlite3.Database,
   });
 }
-
+*/
 /*
 
 [
@@ -47,3 +48,5 @@ async function openDB() {
 ]
 
 */
+
+fetch(`http://localhost:3000/api/persons/1`, {mode: "no-cors"}).then((res) => {console.log(res)})

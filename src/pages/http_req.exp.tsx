@@ -6,7 +6,7 @@ export default function http_req(){
       <pre>
         1. .../api/persons/[id]
         <br />  [id] - element id
-        <br />  GET - returns all data about the element {'{[prop]: [data] | null, ...} || {message: "element does not exist"}'}
+        <br />  GET - returns all data about the element {'{username: string, password: string, title: string, description: string} || {message: "element does not exist"}'}
         <br />  PUT - rewrites element based on JSON body {'{username?: string, password?: string, title?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"} || {message: "error}'}
         <br />  DELETE - deletes element, returns status {'{message: "success"} - even if it doesn\'t exist || {message: "error"}'}
       </pre>
@@ -39,7 +39,7 @@ export default function http_req(){
         <br/>   .../api/persons/logs/[id]?sort=[time || rating || date] ||
         <br/>   .../api/persons/logs/[id]?sort=[time || rating || date]&order=[asc || desc]
         <br/>  GET - returns all logs based on persons id and all their tags {'[{log: {id: int, name: string, description: string, time: real, date: int, rating: int, persons_id: int, username: string, lang_name: string}, tags: [{id: int, name: string, description: string, color: string}]}] || {message: "element does not exist"} || {error: error, message: "Probably wrong data in body"} || {message: "error"}'}
-        <br/>  POST - adds new element based on persons id and JSON body {"{name?: string, description?: string, time?: real, date?: int, language?: string, tags?: [{name: string, description: string, color: string,}], tags_id?: [int]}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {error: error, message: "Probably wrong data in body"} || {message: "error"}'}
+        <br/>  POST - adds new element based on persons id and JSON body {"{name?: string, description?: string, time?: real, date?: int, language?: string, rating?: int, tags?: [{name: string, description: string, color: string,}], tags_id?: [int]}"}; returns status {'{stmt: {}, lastID: int, changes: int} || {error: error, message: "Probably wrong data in body"} || {message: "error"}'}
       </pre>
       <br />
       <br />
