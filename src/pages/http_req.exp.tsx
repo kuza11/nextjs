@@ -4,11 +4,12 @@ export default function http_req(){
   return(
     <div>
       <pre>
-        1. .../api/persons/[id]
+        1. .../api/persons/[id] ||
+        <br />   .../api/persons/[id]?del=[0 || 1]
         <br />  [id] - element id
         <br />  GET - returns all data about the element {'{username: string, password: string, title: string, description: string} || {message: "element does not exist"}'}
-        <br />  PUT - rewrites element based on JSON body {'{username?: string, password?: string, title?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"} || {message: "error}'}
-        <br />  DELETE - deletes element, returns status {'{message: "success"} - even if it doesn\'t exist || {message: "error"}'}
+        <br />  POST - rewrites element based on JSON body {'{username?: string, password?: string, title?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"} || {message: "error}'}
+        <br />  if(del == 1) POST - deletes element, returns status {'{message: "success"} - even if it doesn\'t exist || {message: "error"}'}
       </pre>
       <br />
       <pre>
@@ -23,9 +24,11 @@ export default function http_req(){
       </pre>
       <br />
       <pre>
-        4. .../api/tags/[id]
+        4. .../api/tags/[id] ||
+        <br />   .../api/tags/[id]?del=[0 || 1]
         <br />  GET - returns all data about the element {'{name: string, color: string, description: string} || {error: error, message: "Probably wrong data in body"} || {message: "element does not exist"}'}
-        <br />  PUT - rewrites element based on JSON body {'{name?: string, color?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"} || {error: error, message: "Probably wrong data in body"} || {message: "error"}'}
+        <br />  POST - rewrites element based on JSON body {'{name?: string, color?: string, description?: string}'}; returns status {'{message: "success"} || {message: "element does not exist"} || {error: error, message: "Probably wrong data in body"} || {message: "error"}'}
+        <br />  if(del == 1) POST - deletes element, returns status {'{message: "success"} - even if it doesn\'t exist || {message: "error"}'}
       </pre>
       <br />
       <pre>
@@ -50,10 +53,7 @@ export default function http_req(){
         example:
         <br />  export async function writeData() { "{ const data = await fetch(`http://localhost:3000/api/persons`, {"}
         <br />      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        <br />      headers: {"{"}
-        <br />        'Content-Type': 'application/json'
-        <br />      {"}"},
-        <br />     body: JSON.stringify({'{username:"new", password:"984", title: "sdf", description: "sgfvds"}'}) // body data type must match "Content-Type" header
+        <br />      body: JSON.stringify({'{username:"new", password:"984", title: "sdf", description: "sgfvds"}'}) // body data type must match "Content-Type" header
         <br />    {"}"});
         <br />    const message = await data.json();
         <br />    console.log(message)
@@ -66,5 +66,5 @@ export default function http_req(){
 
 /*
 6. put, delete, sort, filter
-4. delete
+5. rewrite
 */

@@ -2,25 +2,30 @@ import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import defValues from "../config.json";
 
-export async function readDBid({ table, id }: functionParams) {
+export async function readDBid({ table, id }: functionParamsAll) {
   const db = await openDB();
   return await db.get(`SELECT * from ${table} WHERE id = ?`, [id]);
 }
 
-export async function readDBall({ table }: functionParamsAll) {
+export async function readDBall({ table }: functionParams) {
   const db = await openDB();
   return await db.all(`SELECT * from ${table}`);
 }
 
-export async function writeDB({ table, id }: functionParams, { name, color, description }: writeDBparams) {
+export async function writeDB({ table, id }: functionParamsAll, { name, color, description }: writeDBparams) {
   const db = await openDB();
   const cmd = crtCmd(table, { name, color, description });
-  return await db.run(cmd.command, cmd.arr.concat(id ? id : ""))
+  return await db.run(cmd.command, cmd.arr.concat(id ? id : ""));
 }
 
-export async function insertDB({ table }: functionParamsAll, { name, color, description }: writeDBparams) {
+export async function insertDB({ table }: functionParams, { name, color, description }: writeDBparams) {
   const db = await openDB();
-  return await db.run(`INSERT INTO ${table} (name, color, description) VALUES (?, ?, ?)`, [name, color, description])
+  return await db.run(`INSERT INTO ${table} (name, color, description) VALUES (?, ?, ?)`, [name, color, description]);
+}
+
+export async function deleteDB({ table, id }: functionParamsAll) {
+  const db = await openDB();
+  return await db.run(`DELETE FROM ${table} WHERE id = ?`, [id]);
 }
 
 async function openDB() {
@@ -62,12 +67,11 @@ function crtCmd(
   return {command, arr};
 }
 
-
-export interface functionParamsAll{
+export interface functionParams{
   table: string | string[] | undefined;
 }
 
-export interface functionParams{
+export interface functionParamsAll{
   table: string | string[] | undefined;
   id: string | string[] | undefined;
 }

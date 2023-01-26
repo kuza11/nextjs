@@ -8,35 +8,32 @@ import cors from "cors";
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
 router
-  .use(expressWrapper(cors())) // express middleware are supported if you wrap it with expressWrapper
+  .use(expressWrapper(cors()))
   .use(async (req, res, next) => {
     const start = Date.now();
-    await next(); // call next in chain
+    await next();
     const end = Date.now();
-    console.log(`Request took ${end - start}ms`);
   })
   .get(async (req, res) => {
     const data = await readDB({table: "persons", id: req.query.id});
     if(data) res.status(200).json(data);
     else res.status(404).json({message: "element does not exist"});
     
-  })/*
-  .put(
-    async (req, res, next) => {
-      // You may want to pass in NextApiRequest & { isLoggedIn: true }
-      // in createRouter generics to define this extra property
-      if (!req.isLoggedIn) throw new Error("thrown stuff will be caught");
-      // go to the next in chain
-      return next();
-    },
+  })
+  .post(
     async (req, res) => {
-      const user = await updateUser(req.body.user);
-      res.json({ user });
+      if(req.query.del == "1"){
+        const data = await deleteDB({table: "persons", id: req.query.id});
+        if(data) res.status(200).json({message: "success"});
+        else res.status(500).json({message: "error"});
+      }else{
+        const data = await writeDB({table: "persons", id: req.query.id}, {username: JSON.parse(req.body).username, password: JSON.parse(req.body).password, title: JSON.parse(req.body).title, description: JSON.parse(req.body).description});
+        if(data.changes == 0) res.status(404).json({message: "element does not exist"});
+        else if(data) res.status(200).json({message: "success"});
+        else res.status(500).json({message: "error"});
+      }
     }
-  );*/
-
-// create a handler from router with custom
-// onError and onNoMatch
+  );
 export default router.handler({
   onError: (err, req, res) => {
     res.status(400).json({error: err, message: "Probably wrong data in body"});
@@ -58,7 +55,7 @@ export default async function RWPersonById(
       if(data) res.status(200).json(data);
       else res.status(404).json({message: "element does not exist"});
     } else if (req.method === "PUT") {
-      const data = await writeDB({table: "persons", id: req.query.id}, {username: req.body.username, password: req.body.password, title: req.body.title, description: req.body.description});
+      const data = await writeDB({table: "persons", id: req.query.id}, {username: JSON.parse(req.body).username, password: JSON.parse(req.body).password, title: JSON.parse(req.body).title, description: JSON.parse(req.body).description});
       if(data.changes == 0) res.status(404).json({message: "element does not exist"});
       else if(data) res.status(200).json({message: "success"});
       else res.status(500).json({message: "error"});
