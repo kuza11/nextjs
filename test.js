@@ -1,3 +1,4 @@
+
 const fetch = require("node-fetch");
 /*const sqlite3 = require("sqlite3");
 const {open} = require("sqlite");
@@ -54,7 +55,13 @@ async function openDB() {
 let a = "hgfd";
 let b = [1,2,3];
 let c = ["1", "2", "3"];
+let d = [];
 
 //console.log(`gfgds ${b ? "AND (" + b.map((e) => "tags_assignment=?").toString().replaceAll(',', ' OR ') + ")" : ""} `);
 //console.log(b)
-console.log(c.concat(b.map((e)=>e.toString())));
+b.forEach((e) =>{
+  d.push(1);
+  d.push(e);
+});
+
+console.log(d);

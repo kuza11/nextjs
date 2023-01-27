@@ -55,9 +55,18 @@ export async function deleteDB({ table, id } : functionParamsAll){
 
 export async function rewriteDB({ table, id }:functionParamsAll, { name, description, time, date, rating, persons_id, language, tags_id } : writeDBparams) {
   const db = await openDB();
-  const result = await db.run(`UPDATE ${table} set name = ?, description = ?, time = ?, date = ?, rating = ?, persons_id = ? WHERE id = ?;`, [name, description, time, date, rating, persons_id, id]);
+  let arr: string[] = [];
+  if(typeof id != "string") throw "bad type";
+  tags_id?.forEach((tag_id) =>{
+    arr.push(id);
+    arr.push(tag_id.toString())
+  });
+  
   const resultAssignDel = await db.run(`DELETE FROM ${table} WHERE id = ?`, [id]);
-  const resultAssignAdd = await db.run(`INSERT INTO tags_assignment (logs_id, tags_id) VALUES `);
+  const resultAssignAdd = await db.run(`INSERT INTO tags_assignment (logs_id, tags_id) VALUES ${tags_id?.map((e) => `(?, ?)`).toString().replaceAll(',', " ")}`, arr);
+  const lang_id = await db.get(`SELECT id FROM languages WHERE name = ?`, language);
+  const result = await db.run(`UPDATE ${table} set name = ?, description = ?, time = ?, date = ?, rating = ?, persons_id = ? WHERE id = ?;`, [name, description, time, date, rating, persons_id, id]);
+
 }
 
 async function openDB() {
@@ -108,6 +117,7 @@ export interface writeDBparams{
   tags?: [{name: string, description: string, color: string}];
   tags_id?: number[];
 }
+
 
 //SELECT logs.id, logs.name, logs.description, logs.time, logs.date, logs.rating, logs.persons_id, persons.username, languages.name as lang_name from logs INNER JOIN languages on logs.languages_id=languages.id INNER JOIN persons on logs.persons_id=persons.id INNER JOIN tags_assignment on tags_assignment.logs_id=logs.id WHERE persons.id = 1 AND (tags_assignment.tags_id = 2 OR tags_assignment.tags_id = 1) ORDER BY lang_name ;
 //SELECT logs.id, logs.name, logs.description, logs.time, logs.date, logs.rating, logs.persons_id, persons.username, languages.name as lang_name from logs INNER JOIN languages on logs.languages_id=languages.id INNER JOIN persons on logs.persons_id=persons.id INNER JOIN tags_assignment on tags_assignment.logs_id=logs.id WHERE persons.id = ? AND (tags_assignment.tags_id = ?) ;11
