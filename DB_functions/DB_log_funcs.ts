@@ -65,7 +65,7 @@ export async function rewriteDB({ table, id }:functionParamsAll, { name, descrip
   const resultAssignDel = await db.run(`DELETE FROM ${table} WHERE id = ?`, [id]);
   const resultAssignAdd = await db.run(`INSERT INTO tags_assignment (logs_id, tags_id) VALUES ${tags_id?.map((e) => `(?, ?)`).toString().replaceAll(',', " ")}`, arr);
   const lang_id = await db.get(`SELECT id FROM languages WHERE name = ?`, language);
-  const result = await db.run(`UPDATE ${table} set name = ?, description = ?, time = ?, date = ?, rating = ?, persons_id = ? WHERE id = ?;`, [name, description, time, date, rating, persons_id, id]);
+  const result = await db.run(`UPDATE ${table} set name = ?, description = ?, time = ?, date = ?, rating = ?, languages_id = ?, persons_id = ? WHERE id = ?;`, [name, description, time, date, rating, lang_id, persons_id, id]);
 
 }
 
