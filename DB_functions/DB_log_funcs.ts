@@ -2,10 +2,15 @@ import sqlite3 from "sqlite3";
 import { ISqlite, open } from "sqlite";
 import defValues from "../config.json";
 
-export async function readDB({ table }: functionParams, { persons_id, sort }: {persons_id : string | string[] | undefined, sort: {by?: "time" | "rating" | "date" | "lang_name", order?: "asc" | "desc", filter: number[]}}) {
+export async function readDB({ table }: functionParams, { persons_id, sort, filter }: {persons_id : string | string[] | undefined, sort: {by?: "time" | "rating" | "date" | "lang_name", order?: "asc" | "desc"}, filter?: number[] | null}) {
+ 
   const db = await openDB();
   let cmplt = [];
-  let logsArr = await db.all(`SELECT logs.id, logs.name, logs.description, logs.time, logs.date, logs.rating, logs.persons_id, persons.username, languages.name as lang_name from ${table} INNER JOIN languages on logs.languages_id=languages.id INNER JOIN persons on logs.persons_id=persons.id WHERE persons.id = ? ${sort.by ? `ORDER BY ${sort.by} ${sort.order ? sort.order : ''}` : ''};`, [persons_id]);
+  let arr = [];
+  console.log(sort)
+  arr.push(persons_id? persons_id.toString() : "");
+  arr = arr.concat(filter ? filter.map((e) => e.toString()) : []);
+  let logsArr = await db.all(`SELECT logs.id, logs.name, logs.description, logs.time, logs.date, logs.rating, logs.persons_id, persons.username, languages.name as lang_name from ${table} INNER JOIN languages on logs.languages_id=languages.id INNER JOIN persons on logs.persons_id=persons.id INNER JOIN tags_assignment on tags_assignment.logs_id=logs.id WHERE persons.id = ? ${filter ? "AND (" + filter.map((e) => "tags_assignment.tags_id = ?").toString().replaceAll(',', ' OR ') + ")" : ""} ${sort.by ? `ORDER BY ${sort.by} ${sort.order ? sort.order : ''}` : ''};`, arr);//.catch((e) => console.error(e));
   for (let i = 0; i < logsArr.length; i++) {
     cmplt.push({log: logsArr[i], tags: await db.all(`SELECT tags.id, tags.name, tags.description, tags.color FROM tags_assignment INNER JOIN tags on tags.id=tags_assignment.tags_id WHERE tags_assignment.logs_id = ?;`, [logsArr[i].id])});
     
@@ -84,3 +89,6 @@ export interface writeDBparams{
   tags?: [{name: string, description: string, color: string}];
   tags_id?: number[];
 }
+
+//SELECT logs.id, logs.name, logs.description, logs.time, logs.date, logs.rating, logs.persons_id, persons.username, languages.name as lang_name from logs INNER JOIN languages on logs.languages_id=languages.id INNER JOIN persons on logs.persons_id=persons.id INNER JOIN tags_assignment on tags_assignment.logs_id=logs.id WHERE persons.id = 1 AND (tags_assignment.tags_id = 2 OR tags_assignment.tags_id = 1) ORDER BY lang_name ;
+//SELECT logs.id, logs.name, logs.description, logs.time, logs.date, logs.rating, logs.persons_id, persons.username, languages.name as lang_name from logs INNER JOIN languages on logs.languages_id=languages.id INNER JOIN persons on logs.persons_id=persons.id INNER JOIN tags_assignment on tags_assignment.logs_id=logs.id WHERE persons.id = ? AND (tags_assignment.tags_id = ?) ;11

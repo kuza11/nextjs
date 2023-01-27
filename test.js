@@ -52,7 +52,9 @@ async function openDB() {
 //fetch(`http://localhost:3000/api/persons/1`, {mode: "no-cors"}).then((res) => {console.log(res)})
 
 let a = "hgfd";
-let b = [1,2,3,4];
+let b = [1,2,3];
+let c = ["1", "2", "3"];
 
-console.log(`gfgds ${b ? "abc " + b.map((e) => "?").toString().replaceAll(',', ' OR ') + " cba" : ""} `);
-console.log(b.forEach((e) => {return "a"}))
+//console.log(`gfgds ${b ? "AND (" + b.map((e) => "tags_assignment=?").toString().replaceAll(',', ' OR ') + ")" : ""} `);
+//console.log(b)
+console.log(c.concat(b.map((e)=>e.toString())));

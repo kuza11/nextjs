@@ -15,9 +15,11 @@ router
   .get(async (req, res) => {
     let sort = req.query.sort;
     let order = req.query.order;
+    let filter = JSON.parse(req.query.filter ? req.query.filter?.toString() : "null");
     if(order != "asc" && order != "desc") order = undefined;
-    if(sort != "time" && sort != "rating" && sort !="date") sort = undefined;
-    const data = await readDB({table: "logs"}, {persons_id: req.query.id, sort: {by: sort, order: order}});
+    if(sort != "time" && sort != "rating" && sort !="date" && sort !="lang_name") sort = undefined;
+    console.log(filter);
+    const data = await readDB({table: "logs"}, {persons_id: req.query.id, sort: {by: sort, order: order}, filter: filter});
     if(data) res.status(200).json(data);
     else res.status(500).json({message: "error"});
     
