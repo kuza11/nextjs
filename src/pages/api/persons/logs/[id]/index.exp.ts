@@ -25,7 +25,7 @@ router
     
   })
   .post(async (req, res) => {
-    const result = await insertDB({table: "logs"}, {name: JSON.parse(req.body).name, description: JSON.parse(req.body).description, time: JSON.parse(req.body).time, date: JSON.parse(req.body).date, rating: req.query.rating, persons_id: req.query.id, language: JSON.parse(req.body).language, tags: JSON.parse(req.body).tags, tags_id: JSON.parse(req.body).tags_id});
+    const result = await insertDB({table: "logs"}, {name: JSON.parse(req.body).name, description: JSON.parse(req.body).description, time: JSON.parse(req.body).time, date: JSON.parse(req.body).date, rating: JSON.parse(req.body).rating, persons_id: req.query.id, language: JSON.parse(req.body).language, tags: JSON.parse(req.body).tags, tags_id: JSON.parse(req.body).tags_id});
     if(result == 1) res.status(500).json({message: "error"});
     else if(result) res.status(201).json(result);
     else res.status(500).json({message: "error"});
