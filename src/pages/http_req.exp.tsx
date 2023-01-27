@@ -70,5 +70,5 @@ export default function http_req(){
 }
 
 /*
-6. put, delete
+6. put
 */

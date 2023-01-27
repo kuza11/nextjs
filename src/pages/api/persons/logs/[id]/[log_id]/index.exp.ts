@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { insertDB} from "../../../../../../../DB_functions/DB_log_funcs";
+import { insertDB, deleteDB} from "../../../../../../../DB_functions/DB_log_funcs";
 import { createRouter, expressWrapper } from "next-connect";
 import cors from "cors";
 
@@ -13,10 +13,16 @@ router
     const end = Date.now();
   })
   .post(async (req, res) => {
-    const result = await insertDB({table: "logs"}, {name: JSON.parse(req.body).name, description: JSON.parse(req.body).description, time: JSON.parse(req.body).time, date: JSON.parse(req.body).date, rating: JSON.parse(req.body).rating, persons_id: req.query.id, language: JSON.parse(req.body).language, tags: JSON.parse(req.body).tags, tags_id: JSON.parse(req.body).tags_id});
-    if(result == 1) res.status(500).json({message: "error"});
-    else if(result) res.status(201).json(result);
-    else res.status(500).json({message: "error"});
+    if(req.query.del == "del"){
+      const data = await deleteDB({table: "logs", id: req.query.log_id});
+      if(data) res.status(200).json({message: "success"});
+      else res.status(500).json({message: "error"});
+    }else{
+      const result = await insertDB({table: "logs"}, {name: JSON.parse(req.body).name, description: JSON.parse(req.body).description, time: JSON.parse(req.body).time, date: JSON.parse(req.body).date, rating: JSON.parse(req.body).rating, persons_id: req.query.id, language: JSON.parse(req.body).language, tags: JSON.parse(req.body).tags, tags_id: JSON.parse(req.body).tags_id});
+      if(result == 1) res.status(500).json({message: "error"});
+      else if(result) res.status(201).json(result);
+      else res.status(500).json({message: "error"});
+    }
   });
 export default router.handler({
   onError: (err, req, res) => {

@@ -1,5 +1,5 @@
 import sqlite3 from "sqlite3";
-import { ISqlite, open } from "sqlite";
+import { open } from "sqlite";
 import defValues from "../config.json";
 
 export async function readDB({ table }: functionParams, { persons_id, sort, filter }: {persons_id : string | string[] | undefined, sort: {by?: "time" | "rating" | "date" | "lang_name", order?: "asc" | "desc"}, filter?: number[] | null}) {
@@ -46,6 +46,20 @@ export async function insertDB({ table }: functionParams, { name, description, t
   return resultLog;
 }
 
+export async function deleteDB({ table, id } : functionParamsAll){
+  const db = await openDB();
+  const res = await db.run(`DELETE FROM ${table} WHERE id = ?`, [id]);
+  await db.run(`DELETE FROM tags_assignment WHERE logs_id = ?`, [id]);
+  return res;
+}
+
+export async function rewriteDB({ table, id }:functionParamsAll, { name, description, time, date, rating, persons_id, language, tags_id } : writeDBparams) {
+  const db = await openDB();
+  const result = await db.run(`UPDATE ${table} set name = ?, description = ?, time = ?, date = ?, rating = ?, persons_id = ? WHERE id = ?;`, [name, description, time, date, rating, persons_id, id]);
+  const resultAssignDel = await db.run(`DELETE FROM ${table} WHERE id = ?`, [id]);
+  const resultAssignAdd = await db.run(`INSERT INTO tags_assignment (logs_id, tags_id) VALUES `);
+}
+
 async function openDB() {
   return open({
     filename: "./" + defValues.databaseName,
@@ -76,6 +90,11 @@ function crtTAcmd(tags:number[]){
 
 export interface functionParams {
   table: string | string[] | undefined;
+}
+
+export interface functionParamsAll {
+  table: string | string[] | undefined;
+  id: string | string[] | undefined;
 }
 
 export interface writeDBparams{
