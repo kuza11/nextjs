@@ -2,7 +2,7 @@ import sqlite3 from "sqlite3";
 import { ISqlite, open } from "sqlite";
 import defValues from "../config.json";
 
-export async function readDB({ table }: functionParams, { persons_id, sort }: {persons_id : string | string[] | undefined, sort: {by?: "time" | "rating" | "date", order?: "asc" | "desc" }}) {
+export async function readDB({ table }: functionParams, { persons_id, sort }: {persons_id : string | string[] | undefined, sort: {by?: "time" | "rating" | "date" | "lang_name", order?: "asc" | "desc", filter: number[]}}) {
   const db = await openDB();
   let cmplt = [];
   let logsArr = await db.all(`SELECT logs.id, logs.name, logs.description, logs.time, logs.date, logs.rating, logs.persons_id, persons.username, languages.name as lang_name from ${table} INNER JOIN languages on logs.languages_id=languages.id INNER JOIN persons on logs.persons_id=persons.id WHERE persons.id = ? ${sort.by ? `ORDER BY ${sort.by} ${sort.order ? sort.order : ''}` : ''};`, [persons_id]);

@@ -2,5 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/http_req": "pages/http_req.js"
+  "/http_req": "pages/http_req.js",
+  "/api/persons/[id]": "pages/api/persons/[id].js",
+  "/api/persons/logs/[id]": "pages/api/persons/logs/[id].js"
 }

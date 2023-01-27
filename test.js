@@ -49,4 +49,10 @@ async function openDB() {
 
 */
 
-fetch(`http://localhost:3000/api/persons/1`, {mode: "no-cors"}).then((res) => {console.log(res)})
+//fetch(`http://localhost:3000/api/persons/1`, {mode: "no-cors"}).then((res) => {console.log(res)})
+
+let a = "hgfd";
+let b = [1,2,3,4];
+
+console.log(`gfgds ${b ? "abc " + b.map((e) => "?").toString().replaceAll(',', ' OR ') + " cba" : ""} `);
+console.log(b.forEach((e) => {return "a"}))
